@@ -206,9 +206,7 @@ public class MovieCollection
         scanner.nextLine();
 
         Movie selectedMovie = results.get(choice - 1);
-
         displayMovieInfo(selectedMovie);
-
         System.out.println("\n ** Press Enter to Return to Main Menu **");
         scanner.nextLine();
     }
