@@ -11,8 +11,8 @@ public class MovieCollection
     private Scanner scanner;
     private ArrayList<String> cast;
     private ArrayList<String> genre;
-    private ArrayList<Double> topRatings;
-    private ArrayList<Integer> topRevenues;
+    private ArrayList<Double> ratings;
+    private ArrayList<Integer> revenues;
 
     public MovieCollection(String fileName)
     {
@@ -55,7 +55,7 @@ public class MovieCollection
             genre.set(possibleIndex, tempTitle);
         }
         //creates a list of ratings and sorts it
-        ArrayList<Double> ratings = new ArrayList<Double>();
+        ratings = new ArrayList<Double>();
         for (Movie movie : movies){
             ratings.add(movie.getUserRating());
         }
@@ -70,13 +70,8 @@ public class MovieCollection
             }
             ratings.set(possibleIndex, temp);
         }
-        topRatings = new ArrayList<Double>();
-        for (int i = 0; i < 50; i++){
-            topRatings.add(ratings.get(i));
-        }
-        System.out.println(topRatings);
         //creates a list of revenues and sorts it
-        ArrayList<Integer> revenues = new ArrayList<Integer>();
+        revenues = new ArrayList<Integer>();
         for (Movie movie : movies){
             revenues.add(movie.getRevenue());
         }
@@ -90,10 +85,6 @@ public class MovieCollection
                 possibleIndex--;
             }
             revenues.set(possibleIndex, temp);
-        }
-        topRevenues = new ArrayList<Integer>();
-        for (int i = 0; i < 50; i++){
-            topRevenues.add(revenues.get(i));
         }
     }
 
@@ -180,7 +171,7 @@ public class MovieCollection
 
             if (movieTitle.indexOf(searchTerm) != -1)
             {
-                //add the Movie object to the results list
+                //add the Movie objest to the results list
                 results.add(movies.get(i));
             }
         }
@@ -206,7 +197,9 @@ public class MovieCollection
         scanner.nextLine();
 
         Movie selectedMovie = results.get(choice - 1);
+
         displayMovieInfo(selectedMovie);
+
         System.out.println("\n ** Press Enter to Return to Main Menu **");
         scanner.nextLine();
     }
@@ -393,60 +386,63 @@ public class MovieCollection
 
     private void listHighestRated()
     {
-        //finds the movies that correspond to the ratings
-        ArrayList<Movie> movieList = new ArrayList<Movie>();
-        ArrayList<Movie> copyMovies = new ArrayList<Movie>();
-        for (Movie m : movies){
-            copyMovies.add(m);
-        }
-        for (int i = 0; i < topRatings.size(); i++){
-            for (int j = 0; j < copyMovies.size(); j++){
-                if (copyMovies.get(j).getUserRating() == topRatings.get(i) && movieList.size() < 50){
-                    movieList.add(copyMovies.get(j));
-                    copyMovies.remove(j);
-                    j--;
+        //creates a copy of movies and makes a list
+        ArrayList<Movie> copy = new ArrayList<Movie>();
+        ArrayList<Movie> list = new ArrayList<Movie>();
+        copy.addAll(movies);
+        //adds movie with same rating to list
+        for (int j = 0; j < ratings.size(); j++){
+            for (int k = 0; k < copy.size(); k++){
+                if (ratings.get(j) == copy.get(k).getUserRating()){
+                    list.add(copy.get(k));
+                    copy.remove(k);
+                    k--;
+                    break;
                 }
             }
         }
-        //prints out the list 1-50
-        int count = 0;
-        for (Movie movie : movieList){
-            count++;
-            System.out.println(count + ". " + movie.getTitle() + ": " + movie.getUserRating());
+        //prints out the top 50 highest rated movies next to the rating
+        for (int g = 0; g < 50; g++){
+            System.out.println(g + 1 + ". " + list.get(g).getTitle() + ": " + list.get(g).getUserRating());
         }
-        //asks the user which movie would they like to learn more about
+        //asks the user which movie they would like to learn about and prints info about it
         System.out.println("Which movie would you like to learn more about?");
         System.out.print("Enter number: ");
-        int k = scanner.nextInt();
+        int f = scanner.nextInt();
         scanner.nextLine();
-        Movie selectedMovie = movieList.get(k - 1);
+        Movie selectedMovie = list.get(f - 1);
         displayMovieInfo(selectedMovie);
         System.out.println("\n ** Press Enter to Return to Main Menu **");
-        scanner.nextLine();    }
+        scanner.nextLine();
+    }
 
     private void listHighestRevenue()
     {
-        //finds the movies that correspond to the revenue
-        ArrayList<Movie> movieList = new ArrayList<Movie>();
-        for (int i = 0; i < topRevenues.size(); i++){
-            for (int j = 0; j < movies.size(); j++){
-                if (movies.get(j).getRevenue() == topRevenues.get(i)){
-                    movieList.add(movies.get(j));
+        //creates a copy of movies and makes a list
+        ArrayList<Movie> copy = new ArrayList<Movie>();
+        ArrayList<Movie> list = new ArrayList<Movie>();
+        copy.addAll(movies);
+        //adds movie with same rating to list
+        for (int j = 0; j < revenues.size(); j++){
+            for (int k = 0; k < copy.size(); k++){
+                if (revenues.get(j) == copy.get(k).getRevenue()){
+                    list.add(copy.get(k));
+                    copy.remove(k);
+                    k--;
+                    break;
                 }
             }
         }
-        //prints out the list 1-50
-        int count = 0;
-        for (Movie movie : movieList){
-            count++;
-            System.out.println(count + ". " + movie.getTitle() + ": " + movie.getRevenue());
+        //prints out the top 50 highest revenues in movies next to the amount
+        for (int g = 0; g < 50; g++){
+            System.out.println(g + 1 + ". " + list.get(g).getTitle() + ": $" + list.get(g).getRevenue());
         }
-        //asks the user which movie would they like to learn more about
+        //asks the user which movie they would like to learn about and prints info about it
         System.out.println("Which movie would you like to learn more about?");
         System.out.print("Enter number: ");
-        int k = scanner.nextInt();
+        int f = scanner.nextInt();
         scanner.nextLine();
-        Movie selectedMovie = movieList.get(k - 1);
+        Movie selectedMovie = list.get(f - 1);
         displayMovieInfo(selectedMovie);
         System.out.println("\n ** Press Enter to Return to Main Menu **");
         scanner.nextLine();
