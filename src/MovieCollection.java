@@ -255,7 +255,6 @@ public class MovieCollection
         for (int j = 1; j < results.size(); j++)
         {
             String tempTitle = results.get(j);
-
             int possibleIndex = j;
             while (possibleIndex > 0 && tempTitle.compareTo(results.get(possibleIndex - 1)) < 0)
             {
