@@ -171,7 +171,7 @@ public class MovieCollection
 
             if (movieTitle.indexOf(searchTerm) != -1)
             {
-                //add the Movie objest to the results list
+                //add the Movie object to the results list
                 results.add(movies.get(i));
             }
         }
@@ -405,6 +405,10 @@ public class MovieCollection
         for (int g = 0; g < 50; g++){
             System.out.println(g + 1 + ". " + list.get(g).getTitle() + ": " + list.get(g).getUserRating());
         }
+        for (int b = 50; b < list.size(); b++){
+            list.remove(b);
+            b--;
+        }
         //asks the user which movie they would like to learn about and prints info about it
         System.out.println("Which movie would you like to learn more about?");
         System.out.print("Enter number: ");
@@ -436,6 +440,10 @@ public class MovieCollection
         //prints out the top 50 highest revenues in movies next to the amount
         for (int g = 0; g < 50; g++){
             System.out.println(g + 1 + ". " + list.get(g).getTitle() + ": $" + list.get(g).getRevenue());
+        }
+        for (int b = 50; b < list.size(); b++){
+            list.remove(b);
+            b--;
         }
         //asks the user which movie they would like to learn about and prints info about it
         System.out.println("Which movie would you like to learn more about?");
